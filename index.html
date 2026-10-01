@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5efdf" />
+    <title>Department Idea Jam</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <link rel="stylesheet" href="styles.css" />
+    <style>@media (max-width: 750px) { .admin-button { display: block !important; padding: 10px 9px; font-size: 9px; } .login-button { padding: 10px 9px; font-size: 9px; } }</style>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="wordmark" href=".">IDEA<span>JAM</span></a>
+        <div class="meeting-chip"><span class="live-dot"></span> DEPARTMENT MEET / 01</div>
+        <div class="top-actions">
+          <button class="admin-button" id="adminToggle" type="button">ADMIN VIEW ↗</button>
+          <button class="login-button" id="loginButton" type="button">SIGN IN WITH GOOGLE</button>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="eyebrow">OPEN CALL / STUDENT INPUT</div>
+        <h1>MAKE THE NEXT<br /><span>MOVE.</span></h1>
+        <p class="hero-copy">Bring one idea for the department. A workshop, a hackathon, a club, a conversation — if it helps students grow, it belongs here.</p>
+        <div class="agenda-strip"><span>MEETING AGENDA</span><span>TECH + CAREER + COMMUNITY + YOU</span></div>
+      </section>
+
+      <section class="composer-section" aria-labelledby="composer-title">
+        <div class="section-label"><span>01</span><h2 id="composer-title">DROP YOUR IDEA</h2></div>
+        <form class="composer" id="ideaForm">
+          <label class="sr-only" for="ideaInput">Your idea</label>
+          <textarea id="ideaInput" maxlength="280" placeholder="What should we do next?&#10;&#10;Example: A weekend product teardown where senior students share how they built their first project." required></textarea>
+          <div class="composer-footer">
+            <span id="charCount">0 / 280</span>
+            <button class="primary-button" type="submit">POST IDEA <span>↗</span></button>
+          </div>
+        </form>
+        <div class="signin-note" id="signinNote">Sign in to attach your name and photo to an idea. You can still explore the board below.</div>
+      </section>
+
+      <section class="board-section" aria-labelledby="board-title">
+        <div class="section-label board-heading"><span>02</span><h2 id="board-title">THE BOARD <em id="ideaCount">03 IDEAS</em></h2><button class="filter-button" id="sortToggle" type="button">LATEST ↓</button></div>
+        <div class="ideas-grid" id="ideasGrid"></div>
+      </section>
+
+      <section class="agenda-section">
+        <div class="section-label"><span>03</span><h2>WHY WE ARE HERE</h2></div>
+        <div class="agenda-grid">
+          <article><b>01</b><p>Technical + non-technical activities for department students.</p></article>
+          <article><b>02</b><p>Initiatives for technical growth, skills development and career readiness.</p></article>
+          <article><b>03</b><p>Communication, leadership, teamwork and personality development.</p></article>
+          <article><b>04</b><p>Student concerns, suggestions and academic or co-curricular needs.</p></article>
+          <article><b>05</b><p>Workshops, competitions, hackathons, seminars, clubs and more.</p></article>
+          <article><b>06</b><p>Anything else that helps the department move forward together.</p></article>
+        </div>
+      </section>
+
+      <footer><span>IDEA JAM / BUILT FOR BETTER MEETINGS</span><span>© 2026 DEPARTMENT STUDENTS</span></footer>
+    </main>
+
+    <aside class="admin-panel" id="adminPanel" aria-hidden="true">
+      <div class="admin-panel-head"><div><span class="eyebrow">PRIVATE SPACE</span><h2>ADMIN DESK</h2></div><button id="closeAdmin" type="button">×</button></div>
+      <div id="adminGate" class="admin-gate">Sign in with the admin Google account to see the full submission list.</div>
+      <div id="adminContent" class="admin-content" hidden>
+        <div class="admin-summary"><span id="adminCount">0 SUBMISSIONS</span><button class="export-button" id="exportButton" type="button">EXPORT CSV ↓</button></div>
+        <div class="submission-list" id="submissionList"></div>
+      </div>
+    </aside>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
