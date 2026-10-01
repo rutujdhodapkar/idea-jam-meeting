@@ -12,7 +12,8 @@ const formatDate = (value) => new Date(value).toLocaleString([], { dateStyle: 'm
 function showToast(message) { $('toast').textContent = message; $('toast').classList.add('show'); window.setTimeout(() => $('toast').classList.remove('show'), 3000); }
 function decodeGoogleCredential(credential) { const encoded = credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'); return JSON.parse(atob(encoded)); }
 function setUser(user) { currentUser = user; $('googleButton').hidden = true; $('userChip').hidden = false; $('userChip').innerHTML = `<img src="${escapeHtml(user.photo)}" alt="" /><span>${escapeHtml(user.name)}</span><small>SIGN OUT</small>`; $('submitButton').disabled = false; $('loginMessage').textContent = `Posting as ${user.email}. Your name and photo will be shown with your idea.`; }
-function signOut() { currentUser = null; $('googleButton').hidden = false; $('userChip').hidden = true; $('submitButton').disabled = false; $('loginMessage').textContent = 'Sign in with Google to submit. Your Google name and photo will be shown with your idea.'; showToast('SIGNED OUT'); }
+function setAdminLock(locked) { $('adminLock').hidden = !locked; document.body.classList.toggle('locked', locked); }
+function signOut() { currentUser = null; setAdminLock(false); $('googleButton').hidden = false; $('userChip').hidden = true; $('submitButton').disabled = false; $('loginMessage').textContent = 'Sign in with Google to submit. Your Google name and photo will be shown with your idea.'; showToast('SIGNED OUT'); }
 function requestSignIn() {
   if (currentUser || signInPromptQueued) return;
   signInPromptQueued = true;
@@ -23,7 +24,7 @@ function requestSignIn() {
     if (!currentUser && window.google?.accounts?.id) google.accounts.id.prompt();
   }, 3000);
 }
-function handleCredential(response) { const user = decodeGoogleCredential(response.credential); setUser({ name: user.name, email: user.email, photo: user.picture || '' }); showToast(`SIGNED IN AS ${user.name}`); }
+function handleCredential(response) { const user = decodeGoogleCredential(response.credential); const profile = { name: user.name, email: user.email, photo: user.picture || '' }; setUser(profile); setAdminLock(profile.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()); showToast(`SIGNED IN AS ${profile.name}`); }
 function initGoogle() { if (!window.google?.accounts?.id) { window.setTimeout(initGoogle, 250); return; } google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleCredential, auto_select: false }); google.accounts.id.renderButton($('googleButton'), { theme: 'filled_black', size: 'large', text: 'signin_with', shape: 'rectangular', width: 210 }); }
 function renderIdeas() { $('ideaCount').textContent = submissions.length; if (!submissions.length) { $('ideasGrid').innerHTML = '<p class="empty">No ideas submitted yet. Be the first.</p>'; return; } $('ideasGrid').innerHTML = submissions.map((idea) => `<article class="idea-card"><p>${escapeHtml(idea.text)}</p><div class="idea-meta">${idea.photo ? `<img src="${escapeHtml(idea.photo)}" alt="${escapeHtml(idea.name)}" />` : `<span class="avatar">${initials(idea.name)}</span>`}<div><strong>${escapeHtml(idea.name)}</strong><small>${formatDate(idea.createdAt)}</small></div></div></article>`).join(''); }
 async function loadSubmissions() { try { const response = await fetch(API_URL); if (!response.ok) throw new Error(); submissions = await response.json(); renderIdeas(); } catch { submissions = []; $('ideasGrid').innerHTML = '<p class="empty">Submissions are not connected yet. Add the database API to start collecting real ideas.</p>'; $('ideaCount').textContent = '0'; } }

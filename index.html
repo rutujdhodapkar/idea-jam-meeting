@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="styles.css" />
+    <style>[hidden]{display:none!important}.admin-lock{position:fixed;z-index:20;inset:0;background:#ed2f2f;color:#fff;display:grid;place-items:center;text-align:center;padding:30px}.admin-lock p{font:700 clamp(50px,10vw,140px)/.85 'Space Grotesk',sans-serif;letter-spacing:-.08em;margin:0 0 24px}.admin-lock span{font:500 clamp(15px,2vw,25px) 'DM Mono',monospace;letter-spacing:.02em}</style>
     <style>[hidden]{display:none!important}.scroll-prompt{position:fixed;z-index:3;left:50%;bottom:20px;transform:translateX(-50%);background:var(--paper);padding:8px 12px;white-space:nowrap}</style>
   </head>
   <body>
@@ -20,6 +21,6 @@
       <section class="agenda-section"><div class="section-title"><span>03</span><h2>MEETING FOCUS</h2></div><div class="agenda-list"><p><b>01</b> Technical and non-technical activities.</p><p><b>02</b> Skills, career readiness and student growth.</p><p><b>03</b> Communication, leadership and teamwork.</p><p><b>04</b> Workshops, competitions, hackathons, seminars and clubs.</p></div></section>
       <footer>IDEA JAM / DEPARTMENT MEETING 2026</footer>
     </main>
-    <aside id="adminPanel" class="admin-panel" hidden><button id="closeAdmin" class="close" type="button">×</button><p class="kicker">ADMIN ONLY</p><h2>ALL SUBMISSIONS</h2><button id="exportButton" class="export" type="button">EXPORT CSV ↓</button><div id="adminList"></div></aside><button id="adminToggle" class="admin-toggle" type="button">ADMIN</button><div id="toast" class="toast" role="status"></div><script src="app.js"></script>
+    <aside id="adminPanel" class="admin-panel" hidden><button id="closeAdmin" class="close" type="button">×</button><p class="kicker">ADMIN ONLY</p><h2>ALL SUBMISSIONS</h2><button id="exportButton" class="export" type="button">EXPORT CSV ↓</button><div id="adminList"></div></aside><button id="adminToggle" class="admin-toggle" type="button">ADMIN</button><div id="adminLock" class="admin-lock" hidden><div><p>Fuck you bitch</p><span>you are not admin idiot, contact your smart CR</span></div></div><div id="toast" class="toast" role="status"></div><script src="app.js"></script>
   </body>
 </html>
